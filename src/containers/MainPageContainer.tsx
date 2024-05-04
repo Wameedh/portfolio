@@ -1,4 +1,4 @@
-import MainPage from '../../components/common/mainPage/MainPage'
+import MainPage from '../components/common/MainPage'
 
 const MainPageContainer = () => {
   return <MainPage />
