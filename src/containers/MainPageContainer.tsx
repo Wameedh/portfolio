@@ -1,7 +1,7 @@
-import MainPage from '../components/common/MainPage'
+import Portfolio from "../components/common/Portfolio";
 
 const MainPageContainer = () => {
-  return <MainPage />
-}
+  return <Portfolio />;
+};
 
-export default MainPageContainer
+export default MainPageContainer;
