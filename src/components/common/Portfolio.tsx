@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+
 import LogoImage from "./LogoImage";
 import mafiosoImage from "../../assets/mafioso.png";
 import tcpImage from "../../assets/tcp-logo.png";
@@ -10,12 +11,21 @@ import zooble from "../../assets/zooble.png";
 import cinnamonLogo from "../../assets/cinnamon.png";
 import pulseLogo from "../../assets/42.png";
 import lvisLogo from "../../assets/lvis.png";
+
+// import lightLogo from "../../assets/WAM.png";
+// import darkLogo from "../../assets/WAM.png";
+
+//import logo from "../../assets/logo.svg";
+import logo from "../../assets/logo.png";
 import ContactForm from "../ContactForm";
 import About from "../about/About";
+
 import {
   IconBrandGithub,
   IconBrandLinkedin,
   IconMail,
+  IconFileText,
+  // IconFileDownload,
   // IconSun,
   // IconMoon,
 } from "@tabler/icons-react";
@@ -27,28 +37,87 @@ const Portfolio: React.FC = () => {
   const [activeSection, setActiveSection] = useState("home");
   const [showNav, setShowNav] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = [
-        "home",
-        "about",
-        "skills",
-        "experience",
-        "projects",
-        "contact",
-      ];
-      const scrollPosition = window.scrollY;
+  const smoothScroll = (targetId: string): void => {
+    const target = document.getElementById(targetId);
+    if (target) {
+      const targetPosition =
+        target.getBoundingClientRect().top + window.pageYOffset;
+      const startPosition = window.pageYOffset;
+      const distance = targetPosition - startPosition;
+      const duration = 1000; // ms
+      let start: number | null = null;
 
-      for (const section of sections) {
-        const element = document.getElementById(section);
-        if (element && scrollPosition >= element.offsetTop - 200) {
-          setActiveSection(section);
+      const animation = (currentTime: number): void => {
+        if (start === null) start = currentTime;
+        const timeElapsed = currentTime - start;
+        const run = ease(timeElapsed, startPosition, distance, duration);
+        window.scrollTo(0, run);
+        if (timeElapsed < duration) requestAnimationFrame(animation);
+      };
+
+      const ease = (t: number, b: number, c: number, d: number): number => {
+        t /= d / 2;
+        if (t < 1) return (c / 2) * t * t + b;
+        t--;
+        return (-c / 2) * (t * (t - 2) - 1) + b;
+      };
+
+      requestAnimationFrame(animation);
+    }
+  };
+
+  const handleScroll = () => {
+    const sections = [
+      "home",
+      "about",
+      "skills",
+      "experience",
+      "projects",
+      "contact",
+    ];
+    const scrollPosition = window.scrollY;
+    // current scroll position relative to top of window
+    // optional threshold so to transition between areas
+    // add positive threshold to "ease in" to the next area becoming active
+    const threshold = 450; // guess this or ratio relative to scroll-area height
+    const y_offset = window.scrollY + threshold;
+    for (const section of sections) {
+      const scroll_area = document.getElementById(section);
+
+      if (scroll_area) {
+        // loop over the area of elements with class "scroll-area" (selected at top of script)
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of
+        // easily confused with "for...in" which is used for iterating over objects
+        // for (const scroll_area of scroll_areas) {
+        // for...of can be used to loop over arrays (and other iterables)
+        // top of scroll area relative to top of window
+        const start = scroll_area.offsetTop;
+        // top + height of div
+        // (https://developer.mozilla.org/en-US/docs/Web/API/Element/clientHeight)
+        const end = start + scroll_area.clientHeight;
+
+        // if the current scroll position is between the start and end of the scroll area
+        if (y_offset >= start && y_offset <= end) {
+          // // remove the previous scroll area 'active' class
+          // const previous_active = document.querySelector(".active");
+          // if (previous_active) {
+          //   // only remove if one is found
+          //   previous_active.className = removeClass(previous_active, "active");
+          // }
+
+          // apply 'active' class if the scroll area does not already have it
+          if (!scroll_area.className.includes("active")) {
+            setActiveSection(section);
+            break;
+          }
         }
       }
+    }
 
-      setShowNav(scrollPosition > 100);
-    };
+    setShowNav(scrollPosition > 50);
+  };
 
+  useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -57,7 +126,8 @@ const Portfolio: React.FC = () => {
     <div className="creative-portfolio">
       <nav className={`creative-portfolio__nav ${showNav ? "visible" : ""}`}>
         <div className="container">
-          <span className="nav-brand">WA</span>
+          {/* <span className="nav-brand">WA</span> */}
+          <LogoImage logo={logo} alt="logo" size={50} />
           <div className="nav-items">
             {[
               "Home",
@@ -73,6 +143,10 @@ const Portfolio: React.FC = () => {
                 className={`nav-item ${
                   activeSection === item.toLowerCase() ? "active" : ""
                 }`}
+                onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                  e.preventDefault();
+                  smoothScroll(item.toLowerCase());
+                }}
               >
                 {item}
               </a>
@@ -88,8 +162,13 @@ const Portfolio: React.FC = () => {
         </div>
       </nav>
 
-      <section id="home" className="creative-portfolio__hero">
+      {/* <section id="home" className="creative-portfolio__hero">
         <div className="container hero-content">
+          <img
+            src={theme === "light" ? lightLogo : darkLogo}
+            alt="Wameedh M. Ali Logo"
+            className="hero-logo animate-fade-in"
+          />
           <h1 className="animate-fade-in">Wameedh M. Ali</h1>
           <h2 className="animate-fade-in delay-200">
             Senior Frontend Engineer
@@ -102,8 +181,14 @@ const Portfolio: React.FC = () => {
             <a href="#contact" className="btn btn-primary">
               Get in Touch
             </a>
-            <a href="#projects" className="btn btn-secondary">
-              View Projects
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-secondary"
+            >
+              View Resume
+              <IconFileText size={20} className="icon-right" />
             </a>
           </div>
         </div>
@@ -112,6 +197,36 @@ const Portfolio: React.FC = () => {
           <div className="chevron"></div>
           <div className="chevron"></div>
           <div className="chevron"></div>
+        </div>
+      </section> */}
+      <section id="home" className="creative-portfolio__hero">
+        <div className="hero-content">
+          <div className="logo-container">
+            <img src={logo} alt="Wameedh M. Ali Logo" className="hero-logo" />
+          </div>
+          <div className="text-content">
+            <h1>Wameedh M. Ali</h1>
+            <h2>Senior Frontend Engineer</h2>
+            <p>
+              Crafting digital experiences that blend creativity with
+              cutting-edge technology. Let's build something extraordinary
+              together.
+            </p>
+            <div className="cta-buttons">
+              <a href="#contact" className="btn btn-primary">
+                Get in Touch
+              </a>
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-secondary"
+              >
+                View Resume
+                <IconFileText size={20} className="icon-right" />
+              </a>
+            </div>
+          </div>
         </div>
       </section>
       <About />
@@ -268,13 +383,7 @@ const Portfolio: React.FC = () => {
                 backgroundColor: "#e16b5c",
               },
             ].map((project, index) => (
-              <div className="project-card">
-                {/* <div className="project-header"> */}
-                {/* <img
-                  src={project.image}
-                  alt={project.name}
-                  className="project-icon"
-                /> */}
+              <div key={index} className="project-card card">
                 <LogoImage
                   logo={project.image}
                   alt={`${project.name} logo`}

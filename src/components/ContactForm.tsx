@@ -106,48 +106,45 @@ const ContactForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit} className={styles.contactForm}>
-      <div className={styles.formGroup}>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          placeholder="Your Name"
-          className={styles.formInput}
-          style={inputStyle("name")}
-        />
-        {/* {errors.name && (
+      <input
+        type="text"
+        name="name"
+        value={formData.name}
+        onChange={handleChange}
+        placeholder="Your Name"
+        className={styles.formInput}
+        style={inputStyle("name")}
+      />
+      {/* {errors.name && (
           <span className={styles.errorMessage}>{errors.name}</span>
         )} */}
-      </div>
-      <div className={styles.formGroup}>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="Your Email"
-          className={styles.formInput}
-          style={inputStyle("email")}
-        />
-        {/* {errors.email && (
+
+      <input
+        type="email"
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
+        placeholder="Your Email"
+        className={styles.formInput}
+        style={inputStyle("email")}
+      />
+      {/* {errors.email && (
           <span className={styles.errorMessage}>{errors.email}</span>
         )} */}
-      </div>
-      <div className={styles.formGroup}>
-        <textarea
-          name="message"
-          value={formData.message}
-          onChange={handleChange}
-          placeholder="Your Message"
-          rows={4}
-          className={styles.formInput}
-          style={inputStyle("message")}
-        ></textarea>
-        {/* {errors.message && (
+
+      <textarea
+        name="message"
+        value={formData.message}
+        onChange={handleChange}
+        placeholder="Your Message"
+        rows={4}
+        className={styles.formInput}
+        style={inputStyle("message")}
+      ></textarea>
+      {/* {errors.message && (
           <span className={styles.errorMessage}>{errors.message}</span>
         )} */}
-      </div>
+
       <button type="submit" className={styles.btnPrimary}>
         Send Message
       </button>

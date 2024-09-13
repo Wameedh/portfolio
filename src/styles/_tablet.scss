@@ -1,0 +1,49 @@
+@media (max-width: 1024px) and (min-width: 769px) {
+  .creative-portfolio {
+    .container {
+      width: 80vw !important;
+    }
+
+    &__hero {
+      .hero-content {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+      }
+
+      .logo-container {
+        height: 100px !important;
+      }
+
+      .hero-logo {
+        //width: 100px !important;
+        left: -1rem !important;
+      }
+
+      .text-content {
+        padding-left: 0 !important;
+      }
+
+      h1 {
+        font-size: 3rem !important;
+      }
+
+      h2 {
+        font-size: 1.5rem !important;
+      }
+    }
+
+    &__projects {
+      .projects-grid {
+        .project-card {
+          width: calc(45% - 0.5rem) !important;
+        }
+      }
+    }
+
+    &__contact {
+      .container {
+        width: 60vw !important;
+      }
+    }
+  }
+}

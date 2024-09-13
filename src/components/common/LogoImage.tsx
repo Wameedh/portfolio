@@ -34,7 +34,6 @@ const LogoImage: React.FC<LogoImageProps> = ({
   };
 
   const renderLogo = () => {
-    console.log("typeof logo: ", typeof logo);
     if (typeof logo === "string") {
       return <img src={logo} alt={alt} style={imageStyle} />;
     } else if (React.isValidElement(logo)) {

@@ -1,0 +1,193 @@
+// Mobile styles (up to 767px)
+@media (max-width: 767px) {
+  .creative-portfolio {
+    .container {
+      width: 95vw;
+    }
+
+    &__nav {
+      position: fixed;
+
+      .nav-items {
+        gap: 0.5rem !important;
+      }
+    }
+    &__skills {
+      .creative-portfolio__skills-chart {
+        display: flex;
+        flex-direction: column;
+
+        .skill-bar {
+          margin-bottom: 1.5rem;
+          position: relative;
+
+          .skill-name {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+          }
+
+          .skill-level {
+            height: 10px;
+            background-color: rgba(var(--primary-color), 0.2);
+            border-radius: 5px;
+            overflow: hidden;
+
+            &::after {
+              content: "";
+              display: block;
+              height: 100%;
+              background-color: var(--primary-color);
+              transition: width 0.5s ease-out;
+            }
+          }
+
+          .skill-percent {
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 0.8rem;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+
+    &__experience {
+      .creative-portfolio__timeline {
+        &::after {
+          display: none !important; // Hide the timeline
+        }
+
+        .timeline-item {
+          width: 100% !important;
+          margin-bottom: 2rem;
+          padding: 1rem;
+          border-left: 4px solid var(--primary-color);
+          background-color: rgba(var(--primary-color), 0.05);
+          &:nth-child(even) {
+            left: 0;
+          }
+          &::after {
+            display: none !important; // Hide the circle
+          }
+
+          .timeline-content {
+            .timeline-header {
+              flex-direction: column;
+              align-items: flex-start;
+
+              .title-logo {
+                margin-top: 0.5rem;
+                display: flex;
+                align-items: center;
+
+                h4 {
+                  margin-right: 0.5rem;
+                }
+              }
+            }
+
+            ul {
+              padding-left: 1rem;
+            }
+          }
+        }
+      }
+    }
+
+    &__projects {
+      .projects-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        .project-card {
+          width: 100% !important; // Override the 45% width
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          padding: 1rem;
+          background-color: rgba(var(--primary-color), 0.05);
+          border-radius: 8px;
+
+          .project-icon {
+            width: 60px;
+            height: 60px;
+            margin-right: 1rem;
+            flex-shrink: 0;
+          }
+
+          .project-info {
+            flex: 1;
+
+            h3 {
+              margin: 0 0 0.5rem;
+              font-size: 1.1rem;
+            }
+
+            p {
+              font-size: 0.9rem;
+              margin-bottom: 0.5rem;
+            }
+
+            .project-tags {
+              display: flex;
+              flex-wrap: wrap;
+              gap: 0.5rem;
+
+              .tech-tag {
+                font-size: 0.8rem;
+                padding: 2px 6px;
+                background-color: var(--secondary-color);
+                color: var(--text-color);
+                border-radius: 4px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// // Shared animations and hover effects
+// .creative-portfolio {
+//   &__skills-chart {
+//     .skill-bar {
+//       .skill-level::after {
+//         animation: skillFill 1s ease-out forwards;
+//       }
+//     }
+//   }
+
+//   &__timeline {
+//     .timeline-item {
+//       transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+//       &:hover {
+//         transform: translateY(-5px);
+//         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+//       }
+//     }
+//   }
+
+//   &__projects {
+//     .project-card {
+//       transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+//       &:hover {
+//         transform: translateY(-5px);
+//         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+//       }
+//     }
+//   }
+// }
+
+// @keyframes skillFill {
+//   from {
+//     width: 0;
+//   }
+//   to {
+//     width: var(--skill-level);
+//   }
+// }

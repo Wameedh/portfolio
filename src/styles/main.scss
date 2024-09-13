@@ -1,43 +1,77 @@
-@import 'variables';
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "variables";
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
-// Theme classes
-.theme-light {
-  --bg-primary: #{$light-bg-primary};
-  --bg-secondary: #{$light-bg-secondary};
-  --text-primary: #{$light-text-primary};
-  --text-secondary: #{$light-text-secondary};
-  --accent-color: #{$light-accent-color};
-}
+// // Define your base colors
+// $primary-color: #2a9d8f;
+// $secondary-color: #e9c46a;
+// $text-color: #264653;
+// $light-text-color: #f4f1de;
+// $bg-color: #f4f1de;
+// $accent-color: #e76f51;
+// $react-blue: #61dafb;
+// $vue-green: #42b883;
+// $aws-orange: #ff9900;
+// $typescript-blue: #3178c6;
+// $node-green: #339933;
+// $graphql-pink: #e10098;
 
-.theme-dark {
-  --bg-primary: #{$dark-bg-primary};
-  --bg-secondary: #{$dark-bg-secondary};
-  --text-primary: #{$dark-text-primary};
-  --text-secondary: #{$dark-text-secondary};
-  //--accent-color: #{$dark-accent-color};
-}
-
+// Light theme (default)
 :root {
-    --primary-color: #{$primary-color};
-    --secondary-color: #{$secondary-color};
-    --text-color: #{$text-color};
-    --bg-color: #{$bg-color};
-    --accent-color: #{$accent-color};
-  }
+  --primary-color: #{$primary-color};
+  --secondary-color: #{$secondary-color};
+  --text-color: #{$text-color};
+  --bg-color: #{$bg-color};
+  --accent-color: #{$accent-color};
+  --light-text-color: #{$light-text-color};
+  --card-bg-color: #{$bg-color};
+  --shadow-color: rgba(0, 0, 0, 0.1);
+
+  // Technology colors
+  --react-blue: #{$react-blue};
+  --vue-green: #{$vue-green};
+  --aws-orange: #{$aws-orange};
+  --typescript-blue: #{$typescript-blue};
+  --node-green: #{$node-green};
+  --graphql-pink: #{$graphql-pink};
+
+  --darken-primary-color: darken($primary-color, 10%);
+}
+
+// Dark theme
+.theme-dark {
+  --primary-color: #3dc3b3;
+  --secondary-color: #f1d289;
+  --text-color: #{$light-text-color};
+  --bg-color: #1a2833;
+  --accent-color: #{$accent-color};
+  --light-text-color: #{$text-color};
+  --card-bg-color: #2c3e50;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+.card {
+  background-color: var(--card-bg-color);
+  box-shadow: 0 2px 4px var(--shadow-color);
+  padding: 1rem;
+}
