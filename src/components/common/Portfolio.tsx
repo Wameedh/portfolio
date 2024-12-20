@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 
 import LogoImage from "./LogoImage";
 import mafiosoImage from "../../assets/mafioso.png";
+import ib from "../../assets/IB.png";
 import tcpImage from "../../assets/tcp-logo.png";
 import interpreter from "../../assets/Interpreter.png";
 import db from "../../assets/db.svg";
@@ -331,6 +332,25 @@ const Portfolio: React.FC = () => {
                 description: "iOS party game enhancing the werewolf experience",
                 technologies: ["Swift", "Firebase", "UI/UX Design"],
                 image: mafiosoImage,
+                link: "https://apps.apple.com/us/app/mafioso/id1529408224",
+                backgroundColor: "#fff",
+              },
+              {
+                name: "Deadlock Items Build",
+                description:
+                  "Deadlock Build Recommendation System helps players optimize their gameplay with AI build suggestions.",
+                technologies: [
+                  "React",
+                  "Typescript",
+                  "python",
+                  "AWS",
+                  "Llama",
+                  "PostgreSQL",
+                  "Supabase",
+                  "UI/UX Design",
+                ],
+                image: ib,
+                link: "https://deadbuildlock.com/",
                 backgroundColor: "#fff",
               },
               {
@@ -389,7 +409,10 @@ const Portfolio: React.FC = () => {
                   alt={`${project.name} logo`}
                   backgroundColor={project.backgroundColor}
                 />
-                <h3>{project.name}</h3>
+                {/* <h3>{project.name}</h3> */}
+                <a href={project.link}>
+                  <h3>{project.name}</h3>
+                </a>
                 {/* </div> */}
                 <div className="project-info">
                   <p>{project.description}</p>
