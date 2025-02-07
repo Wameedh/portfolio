@@ -61,6 +61,7 @@ textarea {
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: var(--darken-primary-color);
+    // background-color: var(--darken-primary-color);
+    filter: brightness(95%);
   }
 }

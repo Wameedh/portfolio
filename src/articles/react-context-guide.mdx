@@ -1,0 +1,192 @@
+import ArticlePage from '../components/articles/ArticlePage'
+import { CodeExample } from '../components/articles/mdx-components';
+
+export const metadata = {
+  id: 'react-context-guide',
+  title: 'React Context & useContext() - A Comprehensive Study Guide',
+  excerpt: 'Master React Context and useContext() hook with this comprehensive guide.',
+  date: 'Feb 20, 2024',
+  author: 'Wameedh M. Ali',
+  readTime: '10',
+  tags: ['React', 'Context API', 'Hooks', 'State Management'],
+  slug: 'react-context-guide'
+};
+
+# React Context & useContext() - Study Guide
+
+## What is React Context?
+
+React Context is a way to **manage state globally** without passing props manually at every level (a process known as "prop drilling"). It is useful for sharing data like themes, authentication status, or user preferences across multiple components.
+
+## How Does Context Work?
+
+Context provides a central store where values are stored and can be accessed by multiple components, avoiding deep prop drilling.
+
+## Creating and Using Context in React
+
+Let's break it down step by step with an example.
+
+### 1. Create a Context
+
+First, create a context using `createContext()`.
+
+<CodeExample>
+```typescript
+import { createContext } from 'react';
+
+// Create a Context for the theme (light or dark mode)
+const ThemeContext = createContext('light');
+
+export default ThemeContext;
+```
+</CodeExample>
+
+### 2. Provide Context in a Component
+
+The `Provider` component wraps around parts of the app that need access to the context.
+
+<CodeExample>
+```typescript
+import ThemeContext from './ThemeContext';
+
+function App() {
+  return (
+    <ThemeContext.Provider value="dark">
+      <ChildComponent />
+    </ThemeContext.Provider>
+  );
+}
+```
+</CodeExample>
+
+> **Note:** The `value` prop in `Provider` holds the data we want to share (e.g., `'dark'`).
+
+### 3. Consume Context using useContext()
+
+Instead of passing props, use `useContext()` to get the context value inside a child component.
+
+<CodeExample>
+```typescript
+import { useContext } from 'react';
+import ThemeContext from './ThemeContext';
+
+function ChildComponent() {
+  const theme = useContext(ThemeContext);
+  return (
+    <div 
+      style={{ 
+        background: theme === 'dark' ? '#333' : '#fff',
+        color: theme === 'dark' ? '#fff' : '#000' 
+      }}
+    >
+      Theme: {theme}
+    </div>
+  );
+}
+```
+</CodeExample>
+
+> **useContext()** simplifies accessing context values without needing a Consumer wrapper.
+
+## When Should You Use Context?
+
+✅ When multiple components need access to the same data (e.g., themes, authentication, user settings)  
+✅ When prop drilling becomes too complex  
+✅ When state needs to be shared across different parts of the app
+
+## When Not to Use Context?
+
+🚫 For frequently updated values like animations or real-time data (use state management libraries like Redux or Zustand instead)  
+🚫 If the state is only used in a few components (props might be simpler)
+
+## Complex Example: Managing User Authentication
+
+Let's see a more complex example of using Context to manage user authentication.
+
+### 1. Create the Auth Context
+
+<CodeExample>
+```typescript
+import { createContext, useState } from 'react';
+
+const AuthContext = createContext();
+
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
+
+  const login = (username) => setUser({ name: username });
+  const logout = () => setUser(null);
+
+  return (
+    <AuthContext.Provider value={{ user, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+export default AuthContext;
+```
+</CodeExample>
+
+### 2. Wrap the App with AuthProvider
+
+<CodeExample>
+```typescript
+import { AuthProvider } from './AuthContext';
+import Dashboard from './Dashboard';
+
+function App() {
+  return (
+    <AuthProvider>
+      <Dashboard />
+    </AuthProvider>
+  );
+}
+```
+</CodeExample>
+
+### 3. Use the Auth Context in a Component
+
+<CodeExample>
+```typescript
+import { useContext } from 'react';
+import AuthContext from './AuthContext';
+
+function Dashboard() {
+  const { user, login, logout } = useContext(AuthContext);
+
+  return (
+    <div>
+      {user ? (
+        <>
+          <p>Welcome, {user.name}!</p>
+          <button onClick={logout}>Logout</button>
+        </>
+      ) : (
+        <button onClick={() => login('John Doe')}>Login</button>
+      )}
+    </div>
+  );
+}
+```
+</CodeExample>
+
+> Here, `useContext(AuthContext)` allows components to access authentication state and actions (`login` and `logout`) without prop drilling.
+
+## Summary
+
+✔ **Context** is a global state management tool for React  
+✔ **useContext()** helps access Context values easily  
+✔ **Provider** shares data with child components  
+✔ Use Context to avoid unnecessary prop drilling  
+✔ Context can manage complex state like user authentication
+
+🚀 Now you're ready to use Context effectively in React! 🎉
+
+
+
+export default ({ children }) => (
+  <ArticlePage metadata={metadata}>
+    {children}
+  </ArticlePage>
+);
